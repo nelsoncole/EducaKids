@@ -1,0 +1,538 @@
+CAMINHO CORRETO PARA DESENVOLVER O APLICATIVO
+EDUCAKIDS – App Mobile de Creches
+
+1. VISÃO GERAL DO PROJETO
+O EducaKids é um aplicativo móvel que permite:
+Avaliação pública de creches;
+
+
+Identificação de avaliações confiáveis (selo verificado);
+
+
+Matrícula digital de crianças;
+
+
+Gestão de creches por gestores;
+
+
+Administração global do sistema.
+
+
+O sistema possui três tipos de usuários:
+Pai / Encarregado
+
+
+Gestor da Creche
+
+
+Administrador do App
+
+
+Tecnologias principais:
+Frontend Mobile: React Native + JavaScript
+
+
+Backend: API REST
+
+
+Base de Dados: MySQL
+
+
+Autenticação: Telefone + OTP + Token
+
+
+Plataformas: Android e iOS
+
+
+
+FASE 0 — PREPARAÇÃO (ANTES DE PROGRAMAR)
+⚠️ Nesta fase NÃO se escreve código.
+0.1 Definir o escopo do app
+Confirmar:
+App mobile (não web)
+
+
+Funcionalidades principais
+
+
+Tipos de usuários
+
+
+Fluxos principais
+
+
+0.2 Definir regras importantes
+Um pai pode avaliar qualquer creche
+
+
+Um pai só avalia uma vez cada creche
+
+
+Avaliação é “verificada” se houver matrícula confirmada
+
+
+Gestor só pode gerir a própria creche
+
+
+Admin tem acesso total
+
+
+👉 Só depois disso avançar.
+
+FASE 1 — MODELAGEM DO SISTEMA (BASE DE TUDO)
+⚠️ Não escrever código nesta fase.
+1.1 Identificação dos usuários
+Pai
+
+
+Gestor
+
+
+Admin
+
+
+1.2 Identificação das entidades
+Usuário
+
+
+Creche
+
+
+Criança
+
+
+Matrícula
+
+
+Avaliação
+
+
+Fotos (perfil e creche)
+
+
+1.3 Relacionamentos
+Um usuário (pai) → várias crianças
+
+
+Um usuário (gestor) → uma ou mais creches
+
+
+Uma creche → várias avaliações
+
+
+Uma criança → uma matrícula ativa
+
+
+Uma matrícula → pertence a uma creche
+
+
+👉 Se isto não estiver claro, não avances.
+
+FASE 2 — BASE DE DADOS (PRIMEIRO CÓDIGO)
+🔴 Regra do documento base:
+A base de dados vem antes de models, controllers e telas.
+
+2.1 Estrutura das tabelas
+users
+id
+
+
+nome
+
+
+telefone
+
+
+email
+
+
+foto_perfil
+
+
+tipo (pai | gestor | admin)
+
+
+created_at
+
+
+creches
+id
+
+
+user_id (gestor)
+
+
+nome
+
+
+endereco
+
+
+mensalidade
+
+
+horario
+
+
+descricao
+
+
+created_at
+
+
+fotos_creche
+id
+
+
+creche_id
+
+
+imagem
+
+
+criancas
+id
+
+
+user_id (pai)
+
+
+nome
+
+
+data_nascimento
+
+
+matriculas
+id
+
+
+creche_id
+
+
+crianca_id
+
+
+user_id (pai)
+
+
+status (pendente | aceite | rejeitado)
+
+
+created_at
+
+
+avaliacoes
+id
+
+
+user_id (pai)
+
+
+creche_id
+
+
+estrelas (1–5)
+
+
+comentario
+
+
+recomenda (true/false)
+
+
+verificado (true/false)
+
+
+created_at
+
+
+
+2.2 Validação da base de dados
+Perguntas obrigatórias:
+Consigo guardar tudo o que o app faz?
+
+
+Consigo diferenciar os usuários?
+
+
+Consigo aplicar as regras?
+
+
+Se não → corrigir agora.
+
+FASE 3 — MODELS (APÓS A BASE DE DADOS)
+🔴 1 tabela = 1 model
+Criar models:
+User
+
+
+Creche
+
+
+FotoCreche
+
+
+Crianca
+
+
+Matricula
+
+
+Avaliacao
+
+
+Em cada model:
+Campos preenchíveis
+
+
+Relacionamentos bem definidos
+
+
+👉 Ainda sem regras complexas.
+
+FASE 4 — AUTENTICAÇÃO E PERMISSÕES
+⚠️ Autenticação vem antes da lógica do sistema.
+4.1 Autenticação
+Login por telefone
+
+
+OTP
+
+
+Token
+
+
+4.2 Permissões por tipo
+Pai → avaliar, matricular, editar perfil
+
+
+Gestor → gerir creche, aceitar matrículas
+
+
+Admin → acesso total
+
+
+👉 Criar middlewares de permissão.
+
+FASE 5 — CONTROLLERS (ORDEM CORRETA)
+Criar controllers:
+AuthController
+
+
+UserController
+
+
+CrecheController
+
+
+AvaliacaoController
+
+
+MatriculaController
+
+
+CriancaController
+
+
+AdminController
+
+
+Ordem:
+Criar
+
+
+Listar
+
+
+Atualizar
+
+
+Eliminar
+
+
+
+FASE 6 — ROTAS DA API
+Definir rotas REST claras:
+POST   /auth/login
+GET    /creches
+POST   /creches
+PUT    /creches/{id}
+POST   /avaliacoes
+POST   /matriculas
+PUT    /matriculas/{id}/status
+
+Testar tudo com Postman.
+
+FASE 7 — REGRAS DE NEGÓCIO (CRÍTICAS)
+Agora sim entram as regras:
+Um pai só pode avaliar uma vez cada creche
+
+
+Avaliação é verificada se existir matrícula aceite
+
+
+Gestor só pode alterar a própria creche
+
+
+Admin pode bloquear usuários
+
+
+Eliminação de conta remove dados associados
+
+
+👉 Separar regras em serviços.
+
+FASE 8 — FRONTEND MOBILE (REACT NATIVE)
+8.1 Estrutura
+src/
+ screens/
+ components/
+ services/
+ contexts/
+ assets/
+
+8.2 Telas principais
+Login
+
+
+Cadastro
+
+
+Lista de creches
+
+
+Detalhes da creche
+
+
+Avaliar creche
+
+
+Cadastrar criança
+
+
+Matrícula
+
+
+Perfil do usuário
+
+
+Painel do gestor
+
+
+Painel admin
+
+
+
+FASE 9 — FLUXOS COMPLETOS DE USUÁRIOS
+Pai
+Cria conta
+
+
+Login
+
+
+Adiciona foto
+
+
+Vê creches
+
+
+Avalia
+
+
+Cadastra criança
+
+
+Matricula
+
+
+Acompanha status
+
+
+Edita ou elimina conta
+
+
+Gestor
+Cria conta
+
+
+Login
+
+
+Cadastra creche
+
+
+Adiciona fotos
+
+
+Edita dados
+
+
+Recebe matrícula
+
+
+Aceita / rejeita
+
+
+Vê avaliações
+
+
+Edita ou elimina conta
+
+
+Admin
+Login
+
+
+Gere usuários
+
+
+Gere creches
+
+
+Modera avaliações
+
+
+Vê estatísticas
+
+
+
+FASE 10 — TESTES
+Autenticação
+
+
+Permissões
+
+
+Upload de imagens
+
+
+Avaliações
+
+
+Matrículas
+
+
+Casos inválidos
+
+
+
+FASE 11 — REFINAMENTO FINAL
+Melhorar UI
+
+
+Corrigir bugs
+
+
+Otimizar performance
+
+
+Preparar apresentação
+
+
+
+FRASE PARA DEFESA
+“O desenvolvimento seguiu uma ordem correta: modelagem, base de dados, autenticação, 
+regras de negócio e, por fim, o aplicativo móvel.”
+
