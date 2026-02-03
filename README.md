@@ -106,6 +106,6 @@ Se quiseres contribuir com o EducaKids:
 
 1. Faça um fork deste repositório  
 2. Crie uma branch para a sua feature:  
-   ```bash
-   git checkout -b feature/nova-funcionalidade
+```bash
+git checkout -b feature/nova-funcionalidade
 ```
