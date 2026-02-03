@@ -44,6 +44,7 @@ Para executar o projeto localmente:
 ```bash
 git clone https://github.com/nelsoncole/EducaKids.git
 cd EducaKids
+```
 
 ### 2 Pré-requisitos
 ```bash
@@ -51,14 +52,17 @@ cd EducaKids
 - npm ou yarn
 - Expo CLI
 - MySQL (para o backend)
+```
 
 ### 3 Instalar dependências
 ```bash
 npm install
+```
 
 ### 4 Instalar o Expo CLI
 ```bash
 npm install -g expo-cli
+```
 
 ### 5 Executar o servidor/backend
 ```bash
@@ -70,5 +74,6 @@ npm start
 ### 6 Executar o frontend
 ```bash
 npx expo start
+```
 
 
