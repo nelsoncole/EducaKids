@@ -75,5 +75,37 @@ npm start
 ```bash
 npx expo start
 ```
+## ▶️ Uso
 
+Após a instalação e execução do projeto:
 
+🔹 O **Expo DevTools** será aberto automaticamente no navegador.  
+🔹 Execute a aplicação utilizando uma das opções:
+- 📱 **Expo Go** (Android ou iOS, através do QR Code)
+- 🤖 **Emulador Android**
+- 🍎 **Simulador iOS**
+- 🌐 **Modo Web** (se suportado)
+
+🔹 Navegue pelas telas da aplicação, incluindo:
+- Tela de login
+- Dashboards
+- Formulários educativos
+
+🔹 Os dados locais são armazenados utilizando **AsyncStorage**.  
+🔹 A comunicação com o backend ocorre via **API REST (HTTP/HTTPS)**.
+
+🔹 Os principais componentes do frontend encontram-se no diretório:
+```bash
+src/
+```
+---
+
+## 🤝 Contribuindo
+
+Se quiseres contribuir com o EducaKids:
+
+1. Faça um fork deste repositório  
+2. Crie uma branch para a sua feature:  
+   ```bash
+   git checkout -b feature/nova-funcionalidade
+```
